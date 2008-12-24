@@ -26,12 +26,16 @@ class MtToJekyll
   end
 
   def set_fmtdate(entry)
-    date = Date.parse(entry[:date]).strftime("%d %b %Y")
-    entry[:fmtdate] = date
+    fmtdate = Time.parse(entry[:date]).strftime("%d %b %Y")
+    entry[:fmtdate] = fmtdate
+
     mm, dd, yy = entry[:date].split(" ")[0].split("/")
     entry[:date_year] = yy
     entry[:date_day] = dd
     entry[:date_month] = mm
+    
+    iso8601 = Time.parse(entry[:date]).iso8601
+    entry[:isodate] = iso8601
   end
 
   def set_markdown_filename(entry)
@@ -46,8 +50,9 @@ class MtToJekyll
     File.open(output, "w+") do |file|
       file.puts("---")
       file.puts("layout: post")
+      sanitize_title(entry)
       file.puts("title: #{entry[:title]}")
-      # file.puts("date: #{entry[:date_year]}/#{entry[:date_month]}/#{entry[:date_day]}")
+      file.puts("datetime: #{entry[:isodate]}")
       if entry[:category]
         file.puts("tags:")
         entry[:category].each do |tag|
@@ -59,13 +64,17 @@ class MtToJekyll
       file.puts(entry[:body])
     end
   end
+  
+  def sanitize_title(entry)
+    entry[:title] = entry[:title].gsub(/:/, " -") # "Jan 1st: New Years" => "Jan 1st - New Years"
+  end
 
 end
 
 if __FILE__ == $0
   raise "Usage: #{__FILE__} mtexport.dump" if ARGV.empty?
   require File.dirname(__FILE__) + '/mtexport_parser'
-  require 'date'
+  require 'time'
   require 'pp'
 
   mt = MtexportParser.new(File.read(ARGV.first))
