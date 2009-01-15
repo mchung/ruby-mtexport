@@ -1,14 +1,13 @@
-Want to move your MovableType-powered blog elsewhere? 
+Want to move your TypePad.com or MovableType-powered blog somewhere else? 
 
-First, you'll need to [export][1] your blog and put it into
-a convenient data structure.  Here's how to do that:
+First, you'll need to [export][1] your blog and put it into a convenient data structure.  Here's how to do that:
 
     file = File.read("mtexport.dump")
     mt = MtexportParser.new(file)
     mt.parse
     mt.print_summary
 
-Maybe you want to move it into Jekyll too? That's easy too:
+And maybe you want to move it into Jekyll too? That's also easy:
 
     file = File.read("mtexport.dump")
     mt = MtexportParser.new(file)
