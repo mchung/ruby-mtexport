@@ -67,6 +67,8 @@ class MtexportParser
     items.each do |item|
       key, value = split(item)
 
+      next unless key && value # ignore blank key value
+
       # Automagically invoke the method named: process_#{name}
       # For example:
       #   key = "EXTENDED BODY" 
