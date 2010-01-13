@@ -31,6 +31,10 @@ class MtexportParser
     end
   end
 
+  def size
+    @processed.size
+  end
+
   def print_summary
     each_blog_post do |entry|
       puts "#{entry[:date]} - #{entry[:title]}"
