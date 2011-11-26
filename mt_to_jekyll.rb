@@ -1,3 +1,5 @@
+require 'date'
+
 class MtToJekyll
 
   def output_dir=(dir)
@@ -20,13 +22,17 @@ class MtToJekyll
   end
 
   def set_permalink(entry)
-    title = entry[:title]
-    title = title.gsub(/\'/,"").gsub(/\W+/, '-').gsub(/_/, '-').gsub(/(^-+|-+$)/,'').downcase
-    entry[:permalink] = title
+    permalink = entry[:basename]
+    if (permalink.nil?)
+      permalink = entry[:title]
+      permalink = permalink.gsub(/\'/,"").gsub(/\W+/, '-').gsub(/_/, '-').gsub(/(^-+|-+$)/,'').downcase
+    end
+    entry[:permalink] = permalink
   end
 
   def set_fmtdate(entry)
-    fmtdate = Time.parse(entry[:date]).strftime("%d %b %Y")
+    parsedDate = DateTime.strptime(entry[:date], "%m/%d/%Y %H:%M:%S %p")
+    fmtdate = parsedDate.strftime("%d %b %Y")
     entry[:fmtdate] = fmtdate
 
     mm, dd, yy = entry[:date].split(" ")[0].split("/")
@@ -34,8 +40,7 @@ class MtToJekyll
     entry[:date_day] = dd
     entry[:date_month] = mm
     
-    iso8601 = Time.parse(entry[:date]).iso8601
-    entry[:isodate] = iso8601
+    entry[:isodate] = parsedDate.iso8601
   end
 
   def set_markdown_filename(entry)
@@ -52,7 +57,7 @@ class MtToJekyll
       file.puts("layout: post")
       sanitize_title(entry)
       file.puts("title: #{entry[:title]}")
-      file.puts("datetime: #{entry[:isodate]}")
+      file.puts("date: #{entry[:isodate]}")
       if entry[:category]
         file.puts("tags:")
         entry[:category].each do |tag|
@@ -62,6 +67,10 @@ class MtToJekyll
       file.puts("---")
       file.puts("\n")
       file.puts(entry[:body])
+      if entry[:extended_body]
+        file.puts("<!--more-->")
+        file.puts(entry[:extended_body])
+      end
     end
   end
   
@@ -74,8 +83,6 @@ end
 if __FILE__ == $0
   raise "Usage: #{__FILE__} mtexport.dump" if ARGV.empty?
   require File.dirname(__FILE__) + '/mtexport_parser'
-  require 'time'
-  require 'pp'
 
   mt = MtexportParser.new(File.read(ARGV.first))
   mt.parse
