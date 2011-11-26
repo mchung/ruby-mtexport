@@ -19,6 +19,10 @@ And maybe you want to move it into Jekyll too? That's also easy:
         puts "Done processing: #{entry[:title]}"
     end
   
+In fact, running this command will convert an export archive to Jekyll posts into `_posts`:
+
+    ruby mt_to_jekyll.rb <path-to-export>
+
 Viola!
 
   [1]: http://www.sixapart.com/movabletype/docs/mtimport
