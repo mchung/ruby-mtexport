@@ -81,7 +81,7 @@ class MtexportParser
 
       name = "#{key.downcase.gsub(' ', '_')}"
       method = "process_#{name}"
-      if self.respond_to?(method)
+      if self.respond_to?(method,true)
         self.send(method, blog_entry, name.to_sym, value) # invoke process_* method
       else
         raise "Missing '#{method}' to handle label '#{key}'"
