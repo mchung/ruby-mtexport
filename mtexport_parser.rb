@@ -8,6 +8,7 @@ class MtexportParser
   def initialize(content)
     @raw_data = content
     @processed = []
+    @images = {'fullsize' => {}, 'inline' => {}, 'popup' => {}, 'external' => {}}
   end
   
   def parse
@@ -49,6 +50,35 @@ class MtexportParser
     puts "Found #{@processed.size} entries"
   end
 
+  def print_inline_images
+    puts @images['inline'].keys.sort
+    puts "Found #{@images['inline'].size} inline images"
+  end
+
+  def print_popup_images
+    puts @images['popup'].keys.sort
+    puts "Found #{@images['popup'].size} popup images"
+  end
+
+  def print_fullsize_images
+    puts @images['fullsize'].keys.sort
+    puts "Found #{@images['fullsize'].size} fullsize images"
+  end
+
+  def print_external_images
+    puts @images['external'].keys.sort
+    puts "Found #{@images['external'].size} external images"
+  end
+
+  def print_all_images 
+    images = @images['fullsize']
+    images = images.merge(@images['inline'])
+    images = images.merge(@images['popup'])
+    images = images.merge(@images['external'])
+    puts images.keys.sort
+    puts "Found #{images.size} images"
+  end
+
   protected
 
   def parse_meta(blog_entry, meta_items)
@@ -83,9 +113,48 @@ class MtexportParser
       method = "process_#{name}"
       if self.respond_to?(method,true)
         self.send(method, blog_entry, name.to_sym, value) # invoke process_* method
+        parse_images(value)
       else
         raise "Missing '#{method}' to handle label '#{key}'"
       end
+    end
+  end
+
+  def parse_images(body)
+    haystack = Nokogiri::HTML(body)
+    # find onclick image links
+    if haystack.css("a[onclick]").css("img")
+      haystack.css("a[onclick]").css("img").each do |needle|
+        register_image(needle['src'].to_s) if needle['src']
+      end
+    end
+    # find linked images
+    if haystack.css("a[class='asset-img-link']")
+      haystack.css("a[class='asset-img-link']").each do |needle|
+        register_image(needle['href'].to_s) if needle['href']
+      end
+    end
+    # find inline images
+    haystack.css("img").each do |needle|
+      register_image(needle['href'].to_s) if needle['href']
+    end
+  end
+
+  def register_image(image)
+    # MT managed images
+    if image.include?('.a')
+      if image.include?('-')
+        split_image = image.split('-')
+        @images['fullsize'][split_image[0].to_s] = 1
+        if split_image[1] == 'popup'
+          @images['popup'][split_image[0].to_s] = 1
+        else 
+          @images['inline'][image] = 1
+        end
+      end
+    else
+      # External image references
+      @images['external'][image] = 1
     end
   end
 
@@ -176,9 +245,11 @@ end
 
 if __FILE__ == $0
   require 'pp'
+  require 'nokogiri'
   raise "#{__FILE__} file.dump" unless ARGV.size > 0
   mt = MtexportParser.new(File.read(ARGV.first))
   mt.parse
   mt.print_summary
   # mt.print_all
+  mt.print_fullsize_images
 end

@@ -55,3 +55,23 @@ DATE: 01/31/2002 04:23:01 PM
 Here is the first comment on this entry.
 -----
 --------
+TITLE: Here is an entry with images
+AUTHOR: Bear Baz
+DATE: 01/31/2014 03:31:05
+CATEGORY: Politics
+-----
+BODY:
+This is the body of the second entry. It can
+consist of multiple lines. <a class="asset-img-link" href="http://www.foo.com/.a/reallycrypticstringoflettersandnumbers-popup" onclick="window.open( this.href, &#39;_blank&#39;, &#39;width=640,height=480,scrollbars=no,resizable=no,toolbar=no,directories=no,location=no,menubar=no,status=no,left=0,top=0&#39; ); return false"><span class="asset  asset-image at-xid-reallycrypticstringoflettersandnumbers img-responsive">View this photo</span></a>
+-----
+EXCERPT:
+See, this entry does not have an extended piece; but
+it does have an excerpt. It is special. <a class="asset-img-link" href="http://www.foo.com/.a/anotherreallycrypticstringoflettersandnumbers-popup" onclick="window.open( this.href, &#39;_blank&#39;, &#39;width=640,height=480,scrollbars=no,resizable=no,toolbar=no,directories=no,location=no,menubar=no,status=no,left=0,top=0&#39; ); return false" style="display: inline;"><img alt="Bill_Hang PS" class="asset  asset-image at-xid-anotherreallycrypticstringoflettersandnumbers img-responsive" src="http://www.foo.com/.a/anotherreallycrypticstringoflettersandnumbers-450wi" style="width: 450px;" title="Bear Baz" /></a>
+-----
+COMMENT:
+AUTHOR: Quux
+URL: http://www.quux.com/
+DATE: 01/31/2014 04:23:01 PM
+Here is the first comment on this entry.
+-----
+--------
