@@ -12,7 +12,7 @@ Here is some more text.
 -----
 COMMENT:
 AUTHOR: Foo
-DATE: 01/31/2002 15:47:06
+DATE: 01/31/2002 15:47:06 PM
 This is
 the body of this comment.
 -----
@@ -37,7 +37,7 @@ entry, and here it...
 --------
 TITLE: Here is a new entry
 AUTHOR: Baz Quux
-DATE: 01/31/2002 03:31:05
+DATE: 01/31/2002 03:31:05 AM
 CATEGORY: Politics
 -----
 BODY:
@@ -57,7 +57,7 @@ Here is the first comment on this entry.
 --------
 TITLE: Here is an entry with images
 AUTHOR: Bear Baz
-DATE: 01/31/2014 03:31:05
+DATE: 01/31/2014 03:31:05 PM
 CATEGORY: Politics
 -----
 BODY:
@@ -66,7 +66,7 @@ consist of multiple lines. <a class="asset-img-link" href="http://www.foo.com/.a
 -----
 EXCERPT:
 See, this entry does not have an extended piece; but
-it does have an excerpt. It is special. <a class="asset-img-link" href="http://www.foo.com/.a/anotherreallycrypticstringoflettersandnumbers-popup" onclick="window.open( this.href, &#39;_blank&#39;, &#39;width=640,height=480,scrollbars=no,resizable=no,toolbar=no,directories=no,location=no,menubar=no,status=no,left=0,top=0&#39; ); return false" style="display: inline;"><img alt="Bill_Hang PS" class="asset  asset-image at-xid-anotherreallycrypticstringoflettersandnumbers img-responsive" src="http://www.foo.com/.a/anotherreallycrypticstringoflettersandnumbers-450wi" style="width: 450px;" title="Bear Baz" /></a>
+it does have an excerpt. It is special. <a class="asset-img-link" href="http://foo.typepad.com/.a/anotherreallycrypticstringoflettersandnumbers-popup" onclick="window.open( this.href, &#39;_blank&#39;, &#39;width=640,height=480,scrollbars=no,resizable=no,toolbar=no,directories=no,location=no,menubar=no,status=no,left=0,top=0&#39; ); return false" style="display: inline;"><img alt="Bill_Hang PS" class="asset  asset-image at-xid-anotherreallycrypticstringoflettersandnumbers img-responsive" src="http://www.foo.com/.a/anotherreallycrypticstringoflettersandnumbers-450wi" style="width: 450px;" title="Bear Baz" /></a>
 -----
 COMMENT:
 AUTHOR: Quux
